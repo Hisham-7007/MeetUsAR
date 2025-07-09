@@ -11,8 +11,10 @@ module.exports = {
     "./components/**/*.{ts,tsx}",
   ],
   theme: {
-    ...defaultTheme,
     extend: {
+      fontFamily: {
+        abeezee: ['"ABeeZee"', ...defaultTheme.fontFamily.sans],
+      },
       colors: {
         purple: {
           50: "#faf5ff",

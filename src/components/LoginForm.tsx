@@ -1,6 +1,5 @@
 "use client";
 
-import { Lock, Mail, Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { useAuthStore } from "../store/authStore";
@@ -14,7 +13,7 @@ export const LoginForm = ({
 }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  // const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState("");
 
   const { login, isLoading, error, clearError } = useAuthStore();
@@ -59,93 +58,88 @@ export const LoginForm = ({
                 Welcome back
               </h1>
               <p className="text-base md:text-lg text-[#62616b] mt-2">
-                Step into our shopping metaverse
+                Step into our shopping metaverse for an
                 <br />
-                for an unforgettable shopping experience
+                unforgettable shopping experience
               </p>
             </div>
-
             <div className="w-full space-y-5">
+              {/* Email Field with sms.png */}
               <div className="relative">
-                <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#62626b]" />
+                <Image
+                  src="/sms.png"
+                  alt="Email Icon"
+                  width={20}
+                  height={20}
+                  className="absolute left-4 top-1/2 -translate-y-1/2"
+                />
                 <Input
                   type="email"
                   placeholder="Email"
                   value={email}
                   onChange={handleEmailChange}
-                  className="w-full pl-12 py-4 h-14 bg-white/40 border border-white text-[#62626b]"
+                  className="w-96 pl-12 py-4 h-12 bg-white/40 border border-white text-[#62626b] rounded-lg"
                 />
-                {emailError && (
-                  <p className="text-red-500 text-sm mt-1">{emailError}</p>
-                )}
               </div>
 
+              {/* Password Field with lock.png */}
               <div className="relative">
-                <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#62626b]" />
+                <Image
+                  src="/lock.png"
+                  alt="Lock Icon"
+                  width={20}
+                  height={20}
+                  className="absolute left-4 top-1/2 -translate-y-1/2"
+                />
                 <Input
-                  type={showPassword ? "text" : "password"}
+                  type={"password"}
                   placeholder="Password"
                   value={password}
                   onChange={handlePasswordChange}
-                  className="w-full pl-12 pr-12 py-4 h-14 bg-white/40 border border-white text-[#62626b]"
+                  className="w-96 pl-12 pr-12 py-4 h-12 bg-white/40 border border-white text-[#62626b] rounded-lg"
                 />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-[#62626b]"
-                >
-                  {showPassword ? (
-                    <EyeOff className="w-5 h-5" />
-                  ) : (
-                    <Eye className="w-5 h-5" />
-                  )}
-                </button>
               </div>
-            </div>
+              {emailError && (
+                <p className="text-red-500 text-sm mt-1 ml-1">{emailError}</p>
+              )}
 
+              {/* Login Button */}
+              <Button
+                type="submit"
+                disabled={!isFormValid() || isLoading}
+                className="w-96 py-4 bg-[#9414ff] hover:bg-[#8412e5] text-white text-base font-medium rounded-lg"
+              >
+                {isLoading ? "Logging in..." : "Login"}
+              </Button>
+            </div>
             {error && (
               <div className="text-red-500 text-sm text-center">{error}</div>
             )}
-
-            <Button
-              type="submit"
-              disabled={!isFormValid() || isLoading}
-              className="w-full py-4 bg-[#9414ff] hover:bg-[#8412e5] text-white text-base"
-            >
-              {isLoading ? "Logging in..." : "Login"}
-            </Button>
-
             <p className="text-center text-[#62616b] text-sm">
               Don't have an account?{" "}
               <span className="hover:underline cursor-pointer">Sign up</span>
             </p>
-            <p className="text-center text-sm text-white">
+            {/* <p className="text-center text-sm text-white">
               Test Email:{" "}
               <span className="font-medium">dev.aert@gmail.com</span>
               <br />
               Password: <span className="font-medium">helloworld</span>
-            </p>
+            </p> */}
           </form>
         </div>
 
         {/* Right side - visual design */}
-        <div className="hidden lg:block lg:w-1/2 relative h-[600px] lg:h-auto">
+        <div className="hidden lg:block lg:w-1/2 relative h-[800px] lg:h-68">
           <Image
-            src="/login-bg.png"
+            src="/logo-meet-vr.png"
             alt="Design Background"
             fill
             className="object-contain"
+            quality={100}
             priority
           />
-          <div className="absolute w-80 h-20 bottom-32 left-10">
-            <Image
-              src="/meetusvr-logo.png"
-              alt="MeetusVR Logo"
-              fill
-              className="object-contain"
-              priority
-            />
-          </div>
+
+          <div className="absolute w-80 h-20 bottom-32 left-48 mr-16"></div>
         </div>
       </div>
     </div>
