@@ -1,16 +1,17 @@
 "use client";
 
-import type React from "react";
-import { useState } from "react";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
-import { useAuthStore } from "../store/authStore";
+import { Lock, Mail, Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
+import { useAuthStore } from "../store/authStore";
+import { Button } from "../../components/ui/button";
+import { Input } from "../../components/ui/input";
 
-interface LoginFormProps {
+export const LoginForm = ({
+  onLoginSuccess,
+}: {
   onLoginSuccess: () => void;
-}
-
-export const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
+}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -18,27 +19,17 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
 
   const { login, isLoading, error, clearError } = useAuthStore();
 
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  const isFormValid = () => {
-    return (
-      email.trim() !== "" && password.trim() !== "" && validateEmail(email)
-    );
-  };
+  const validateEmail = (email: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const isFormValid = () =>
+    email.trim() !== "" && password.trim() !== "" && validateEmail(email);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setEmail(value);
-
-    if (value && !validateEmail(value)) {
-      setEmailError("Please enter a valid email address");
-    } else {
-      setEmailError("");
-    }
-
+    setEmailError(
+      !validateEmail(value) ? "Please enter a valid email address" : ""
+    );
     if (error) clearError();
   };
 
@@ -49,65 +40,59 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!isFormValid()) return;
-
     const success = await login(email, password);
-    if (success) {
-      onLoginSuccess();
-    }
+    if (success) onLoginSuccess();
   };
 
   return (
-    <div className="min-h-screen flex bg-gradient-to-r from-purple-200 to-pink-400">
-      <div className="flex-1 flex items-center justify-center px-8 py-12 ">
-        <div className="w-full max-w-md">
-          <div className="mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">
-              Welcome back
-            </h1>
-            <p className="text-gray-600">
-              Step into our shopping metaverse for an
-              <br />
-              unforgettable shopping experience
-            </p>
-          </div>
+    <div className="bg-gradient-to-r from-pink-100 to-purple-300 flex justify-center items-center w-full min-h-screen px-4 sm:px-8 md:px-16">
+      <div className="relative w-full max-w-7xl bg-white/30 rounded-2xl border-2 border-white backdrop-blur-md overflow-hidden flex flex-col lg:flex-row">
+        {/* Left side - form */}
+        <div className="w-full lg:w-1/2 flex flex-col justify-center py-16 px-6 sm:px-12 md:px-20">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col items-center gap-8 w-full max-w-md mx-auto"
+          >
+            <div className="text-center">
+              <h1 className="text-4xl md:text-5xl font-bold text-[#1a1a1d]">
+                Welcome back
+              </h1>
+              <p className="text-base md:text-lg text-[#62616b] mt-2">
+                Step into our shopping metaverse
+                <br />
+                for an unforgettable shopping experience
+              </p>
+            </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Email Field */}
-            <div>
+            <div className="w-full space-y-5">
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
+                <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#62626b]" />
+                <Input
                   type="email"
                   placeholder="Email"
                   value={email}
                   onChange={handleEmailChange}
-                  className={`w-full pl-12 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent ${
-                    emailError ? "border-red-500" : "border-gray-300"
-                  }`}
+                  className="w-full pl-12 py-4 h-14 bg-white/40 border border-white text-[#62626b]"
                 />
+                {emailError && (
+                  <p className="text-red-500 text-sm mt-1">{emailError}</p>
+                )}
               </div>
-              {emailError && (
-                <p className="text-red-500 text-sm mt-1">{emailError}</p>
-              )}
-            </div>
 
-            {/* Password Field */}
-            <div>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
+                <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#62626b]" />
+                <Input
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   value={password}
                   onChange={handlePasswordChange}
-                  className="w-full pl-12 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full pl-12 pr-12 py-4 h-14 bg-white/40 border border-white text-[#62626b]"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-[#62626b]"
                 >
                   {showPassword ? (
                     <EyeOff className="w-5 h-5" />
@@ -118,61 +103,49 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
               </div>
             </div>
 
-            {/* Error Message */}
             {error && (
               <div className="text-red-500 text-sm text-center">{error}</div>
             )}
 
-            {/* Login Button */}
-            <button
+            <Button
               type="submit"
               disabled={!isFormValid() || isLoading}
-              className={`w-full py-3 rounded-lg font-medium transition-all duration-200 ${
-                isFormValid() && !isLoading
-                  ? "bg-purple-600 hover:bg-purple-700 text-white"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
-              }`}
+              className="w-full py-4 bg-[#9414ff] hover:bg-[#8412e5] text-white text-base"
             >
               {isLoading ? "Logging in..." : "Login"}
-            </button>
+            </Button>
 
-            {/* Sign up link */}
-            <p className="text-center text-gray-600">
+            <p className="text-center text-[#62616b] text-sm">
               Don't have an account?{" "}
-              <a
-                href="#"
-                className="text-purple-600 hover:text-purple-700 font-medium"
-              >
-                Sign up
-              </a>
+              <span className="hover:underline cursor-pointer">Sign up</span>
+            </p>
+            <p className="text-center text-sm text-white">
+              Test Email:{" "}
+              <span className="font-medium">dev.aert@gmail.com</span>
+              <br />
+              Password: <span className="font-medium">helloworld</span>
             </p>
           </form>
-          {/* Test Credentials */}
-          <p className="text-center text-white text-sm mt-2">
-            Test Email: <span className="font-medium">dev.aert@gmail.com</span>{" "}
-            <br />
-            Password: <span className="font-medium">helloworld</span>
-          </p>
         </div>
-      </div>
 
-      {/* Right side - Full Background Image */}
-      <div className="hidden lg:block lg:flex-1 relative">
-        <Image
-          src="/login-bg.png"
-          alt="Login Background"
-          fill
-          className="object-contain"
-          priority
-        />
-        <div className="w-80 items-center h-44 absolute bottom-56 left-64 bg-opacity-64 px-4 py-2 rounded-md pt-5">
+        {/* Right side - visual design */}
+        <div className="hidden lg:block lg:w-1/2 relative h-[600px] lg:h-auto">
           <Image
-            src="/meetusvr-logo.png"
-            alt="Login Background"
+            src="/login-bg.png"
+            alt="Design Background"
             fill
-            className="object-contain"
+            className="object-cover"
             priority
           />
+          <div className="absolute w-80 h-20 bottom-32 left-10">
+            <Image
+              src="/meetusvr-logo.png"
+              alt="MeetusVR Logo"
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
         </div>
       </div>
     </div>
