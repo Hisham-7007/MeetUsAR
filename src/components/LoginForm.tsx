@@ -45,13 +45,13 @@ export const LoginForm = ({
   };
 
   return (
-    <div className="bg-gradient-to-r from-pink-100 to-purple-300 flex justify-center items-center w-full min-h-screen px-4 sm:px-8 md:px-16">
-      <div className="relative w-full max-w-7xl bg-white/30 rounded-2xl border-2 border-white backdrop-blur-md overflow-hidden flex flex-col lg:flex-row">
+    <div className="bg-gradient-to-r from-purple-100 to-purple-400 flex justify-center items-center w-full min-h-screen px-4 sm:px-8 md:px-16">
+      <div className="relative w-full max-w-6xl bg-white/30 rounded-2xl border-2 border-white backdrop-blur-md overflow-hidden flex flex-col lg:flex-row bg-gradient-to-r from-purple-100 to-purple-300 ">
         {/* Left side - form */}
         <div className="w-full lg:w-1/2 flex flex-col justify-center py-16 px-6 sm:px-12 md:px-20">
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col items-center gap-8 w-full max-w-md mx-auto"
+            className="flex flex-col items-center gap-8 w-full max-w-md mx-auto px-8"
           >
             <div className="text-center">
               <h1 className="text-4xl md:text-5xl font-bold text-[#1a1a1d]">
@@ -78,7 +78,7 @@ export const LoginForm = ({
                   placeholder="Email"
                   value={email}
                   onChange={handleEmailChange}
-                  className="w-96 pl-12 py-4 h-12 bg-white/40 border border-white text-[#62626b] rounded-lg"
+                  className="w-full pl-12 py-4 h-12 bg-white/40 border border-white text-[#62626b] rounded-lg"
                 />
               </div>
 
@@ -96,7 +96,7 @@ export const LoginForm = ({
                   placeholder="Password"
                   value={password}
                   onChange={handlePasswordChange}
-                  className="w-96 pl-12 pr-12 py-4 h-12 bg-white/40 border border-white text-[#62626b] rounded-lg"
+                  className="w-full pl-12 pr-12 py-4 h-12 bg-white/40 border border-white text-[#62626b] rounded-lg"
                 />
               </div>
               {emailError && (
@@ -107,7 +107,7 @@ export const LoginForm = ({
               <Button
                 type="submit"
                 disabled={!isFormValid() || isLoading}
-                className="w-96 py-4 bg-[#9414ff] hover:bg-[#8412e5] text-white text-base font-medium rounded-lg"
+                className="w-full py-4 bg-[#9414ff] hover:bg-[#8412e5] text-white text-base font-medium rounded-lg"
               >
                 {isLoading ? "Logging in..." : "Login"}
               </Button>
@@ -115,16 +115,10 @@ export const LoginForm = ({
             {error && (
               <div className="text-red-500 text-sm text-center">{error}</div>
             )}
-            <p className="text-center text-[#62616b] text-sm">
+            <p className="w-full text-center text-[#62616b] text-sm">
               Don't have an account?{" "}
               <span className="hover:underline cursor-pointer">Sign up</span>
             </p>
-            {/* <p className="text-center text-sm text-white">
-              Test Email:{" "}
-              <span className="font-medium">dev.aert@gmail.com</span>
-              <br />
-              Password: <span className="font-medium">helloworld</span>
-            </p> */}
           </form>
         </div>
 
