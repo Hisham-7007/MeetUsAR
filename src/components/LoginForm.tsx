@@ -83,7 +83,7 @@ export const LoginForm = ({
               </div>
 
               {/* Password Field with lock.png */}
-              <div className="relative">
+              <div className="relative pb-2">
                 <Image
                   src="/lock.png"
                   alt="Lock Icon"
@@ -104,10 +104,17 @@ export const LoginForm = ({
               )}
 
               {/* Login Button */}
-              <Button
+              {/* <Button
                 type="submit"
                 disabled={!isFormValid() || isLoading}
                 className="w-full py-4 bg-[#9414ff] hover:bg-[#8412e5] text-white text-base font-medium rounded-lg"
+              >
+                {isLoading ? "Logging in..." : "Login"}
+              </Button> */}
+              <Button
+                type="submit"
+                disabled={!isFormValid() || isLoading}
+                className="w-full py-4 bg-[#9414ff] hover:bg-[#8412e5] disabled:bg-[#9414ff] disabled:opacity-100 text-white text-base font-medium rounded-lg"
               >
                 {isLoading ? "Logging in..." : "Login"}
               </Button>
