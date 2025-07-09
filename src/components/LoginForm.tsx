@@ -134,7 +134,7 @@ export const LoginForm = ({
             src="/login-bg.png"
             alt="Design Background"
             fill
-            className="object-cover"
+            className="object-contain"
             priority
           />
           <div className="absolute w-80 h-20 bottom-32 left-10">
