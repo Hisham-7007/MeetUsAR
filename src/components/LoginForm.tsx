@@ -147,6 +147,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
               </a>
             </p>
           </form>
+          {/* Test Credentials */}
+          <p className="text-center text-white text-sm mt-2">
+            Test Email: <span className="font-medium">dev.aert@gmail.com</span>{" "}
+            <br />
+            Password: <span className="font-medium">helloworld</span>
+          </p>
         </div>
       </div>
 
